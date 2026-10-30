@@ -1,1 +1,46 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reddit top posts — recovery</title><link rel="stylesheet" href="style.css"></head><body><main><div class="top"><div><div class="eyebrow">Recovered dashboard shell</div><h1>Reddit top posts</h1><p class="muted">SFW-only top-post dashboard metadata.</p></div><span class="status">RECONSTRUCTED</span></div><div class="grid"><div class="card"><b>STATUS</b><div class="value" id="state">—</div></div><div class="card"><b>ITEMS</b><div class="value" id="items">—</div></div><div class="card"><b>UPDATED</b><div class="value" id="updated">—</div></div></div><div class="notice"><b>Recovery note</b><p>This is a reconstructed Pages layer. Replace <code>docs/latest.json</code> with real exporter output when the original emailer is recovered.</p></div></main><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reddit nổi bật</title>
+<script>
+  // Same light/dark choice as the other tuongphanbase pages, else the system's.
+  (function(){
+    let t = null; try{ t = localStorage.getItem('fleet_theme'); }catch(e){}
+    document.documentElement.setAttribute('data-theme', t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  })();
+</script>
+<link rel="stylesheet" href="../emailer-dashboard/theme.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="appbar">
+  <a class="appbar-name" href="../emailer-dashboard/">tuongphanbase</a>
+  <nav class="appbar-tabs" aria-label="Trang">
+    <a href="../emailer-dashboard/">Bot</a>
+    <a href="../emailer-dashboard/prices.html">Giá hôm nay</a>
+    <a href="../emailer-dashboard/projects.html">Dự án</a>
+  </nav>
+</header>
+<main>
+  <div class="page-head">
+    <div>
+      <h1>Reddit nổi bật</h1>
+      <div class="page-sub">Bài nổi bật nhất trong các subreddit bạn chọn.</div>
+    </div>
+    <a class="btn" href="https://github.com/tuongphanbase/reddit-top-post-emailer">Mã nguồn</a>
+  </div>
+  <section class="panel" aria-label="Lần chạy gần nhất">
+    <dl class="facts">
+      <div><dt>Trạng thái</dt><dd><span class="tag" id="state">Đang tải…</span></dd></div>
+      <div><dt>Số bài trong lần gửi gần nhất</dt><dd id="items">—</dd></div>
+      <div><dt>Cập nhật</dt><dd id="updated">—</dd></div>
+      <div><dt>Lịch đặt</dt><dd>08:00 hằng ngày (giờ Việt Nam)</dd></div>
+    </dl>
+    <p class="note" id="note" hidden></p>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

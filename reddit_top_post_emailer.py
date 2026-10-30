@@ -189,29 +189,29 @@ def save_sent_ids(sent_ids, newly_sent_ids):
         json.dump(merged, f, indent=2)
 
 
+# Email look shared by all the bots: system fonts, neutral greys, one blue accent.
+FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"
+
+
 def build_card_html(p):
     title_esc = escape(p["title"])
     thumb = (
-        f'<td style="width:110px; padding-right:12px; vertical-align:top;">'
+        f'<td style="width:96px; padding-right:12px; vertical-align:top;">'
         f'<a href="{escape(p["permalink"])}"><img src="{escape(p["thumbnail"])}" alt="" '
-        f'width="110" style="display:block; width:110px; height:auto; max-height:140px; '
-        f'object-fit:cover; border-radius:8px; background:#f0f0f0;"></a></td>'
+        f'width="96" style="display:block; width:96px; height:auto; max-height:120px; '
+        f'object-fit:cover; border-radius:4px; background:#F7F8FA;"></a></td>'
         if p["thumbnail"] else ""
     )
     return f"""
-<tr><td style="padding:8px 0;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fff; border:1px solid #e0e0e0; border-radius:10px;">
-<tr><td style="padding:12px;">
+<tr><td style="padding:12px 16px; border-top:1px solid #E2E4E8;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
 {thumb}
-<td style="vertical-align:top; font-family:Arial,Helvetica,sans-serif;">
-<div style="font-size:12px; color:#888;">#{p['rank']} &middot; {escape(p['subreddit'])}</div>
-<a href="{escape(p['permalink'])}" style="display:block; margin-top:4px; font-size:15px; line-height:1.35; color:#1a1a1b; text-decoration:none; font-weight:bold;">{title_esc}</a>
-<div style="font-size:12px; color:#888; margin-top:6px;">&#9650; {p['score']:,} points &middot; {p['comments']:,} comments</div>
+<td style="vertical-align:top; font-family:{FONT};">
+<div style="font-size:12px; color:#6E7581;">#{p['rank']} &middot; {escape(p['subreddit'])}</div>
+<a href="{escape(p['permalink'])}" style="display:block; margin-top:2px; font-size:15px; line-height:1.4; color:#1D2129; text-decoration:none; font-weight:600;">{title_esc}</a>
+<div style="font-size:12px; color:#596170; margin-top:4px;">{p['score']:,} points &middot; {p['comments']:,} comments</div>
 </td>
 </tr></table>
-</td></tr>
-</table>
 </td></tr>"""
 
 
@@ -219,12 +219,15 @@ def build_html(posts, subreddits):
     cards = "".join(build_card_html(p) for p in posts)
     return f"""\
 <html>
-<body style="margin:0; padding:20px; background:#f4f4f4; font-family:Arial,Helvetica,sans-serif;">
-<h1 style="color:#222; font-size:22px;">Top {len(posts)} Reddit posts from r/{escape(subreddits)}</h1>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:700px;">
+<body style="margin:0; padding:24px 12px; background:#F4F5F7; font-family:{FONT}; color:#1D2129;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:680px; margin:0 auto; background:#FFFFFF; border:1px solid #E2E4E8; border-radius:8px;">
+<tr><td style="padding:16px; font-family:{FONT};">
+<div style="font-size:20px; font-weight:600; line-height:1.3; color:#1D2129;">Top {len(posts)} Reddit posts</div>
+<div style="font-size:13px; color:#596170; margin-top:2px;">r/{escape(subreddits)} &middot; safe-for-work only, ranked by score</div>
+</td></tr>
 {cards}
 </table>
-<p style="color:#999; font-size:12px; margin-top:20px;">Safe-for-work posts only, ranked by score. Posts already sent recently are skipped.</p>
+<p style="max-width:680px; margin:12px auto 0; color:#6E7581; font-size:12px; font-family:{FONT};">Posts already sent recently are skipped.</p>
 </body>
 </html>"""
 
